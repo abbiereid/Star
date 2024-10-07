@@ -1,1 +1,2 @@
-import BSL_Translator
+import BSL_Translator as bsl
+
