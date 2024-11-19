@@ -27,6 +27,7 @@ def gesture_recognition(image):
             return results.gestures[0][0]
         else:
             return "No gesture detected"
+            
     except Exception as e:
         print(f"Error in gesture recognition: {e}")
     
@@ -40,7 +41,7 @@ with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) a
         image = cv2.flip(image, 1)
         image.flags.writeable = False
 
-        print(gesture_recognition(image))
+        gesture = gesture_recognition(image)
 
         try:
             results = hands.process(image)
@@ -55,4 +56,4 @@ with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) a
             for num, hand in enumerate(results.multi_hand_landmarks):
                 mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS)
         
-        camera.show(image)
+        camera.show(image, gesture.category_name if gesture != "No gesture detected" else gesture)
