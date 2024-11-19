@@ -4,7 +4,6 @@ import numpy as np
 import uuid
 import os
 import sys
-import threading
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from camera import Camera
 
@@ -14,12 +13,9 @@ mp_hands = mp.solutions.hands
 
 with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
     camera = Camera()
-    capture_thread = threading.Thread(target=camera.capture)
-    capture_thread.start()
 
-    while camera.get_running():
-        if not camera.get_success():
-            continue
+    while camera.get_success:
+        camera.capture()
         
         image = cv2.cvtColor(camera.get_frame(), cv2.COLOR_BGR2RGB)
         image.flags.writeable = False
@@ -32,5 +28,11 @@ with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) a
 
         image.flags.writeable = True
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-
+        
         print(results)
+
+        if results.multi_hand_landmarks:
+            for num, hand in enumerate(results.multi_hand_landmarks):
+                mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS)
+        
+        camera.show(image)
