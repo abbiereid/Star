@@ -40,7 +40,7 @@ with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) a
         image = cv2.flip(image, 1)
         image.flags.writeable = False
 
-        print = gesture_recognition(image)
+        print(gesture_recognition(image))
 
         try:
             results = hands.process(image)
