@@ -9,8 +9,6 @@ from mediapipe.tasks import python
 import time
 from mediapipe.tasks.python import vision
 
-mp_drawing = mp.solutions.drawing_utils
-mp_hands = mp.solutions.hands
 
 wake_phrase_sequence = ["open_palm","closed_fist","open_palm"]
 
@@ -35,6 +33,8 @@ def gesture_recognition(image):
     
 
 def detecting_gestures():
+    mp_drawing = mp.solutions.drawing_utils
+    mp_hands = mp.solutions.hands
     with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
         camera = Camera()
 
@@ -62,4 +62,3 @@ def detecting_gestures():
             
             camera.show(image, gesture.category_name if gesture != "No gesture detected" else gesture)
 
-detecting_gestures()
