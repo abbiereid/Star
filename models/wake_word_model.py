@@ -55,7 +55,7 @@ def detecting_gestures():
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
             if results.multi_hand_landmarks:
-                for hand in enumerate(results.multi_hand_landmarks):
+                for i, hand in enumerate(results.multi_hand_landmarks):
                     mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS)
             
             camera.show(image, gesture.category_name if gesture != "No gesture detected" else gesture)
