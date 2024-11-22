@@ -23,4 +23,3 @@ wakeWordThread = threading.Thread(target=wwm.detecting_gestures, daemon=True)
 wakeWordThread.start()
 
 ui.run()
-
