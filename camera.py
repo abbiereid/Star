@@ -15,7 +15,7 @@ class Camera:
         except Exception as e:
             print(f"Error in camera: {e}")
 
-    def show(self, frame, text=None):
+    def show(self, frame, text="No gesture detected"):
         self.frame = frame
         cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
         cv2.imshow('Camera', frame)

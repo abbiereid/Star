@@ -1,59 +1,75 @@
 import mediapipe as mp
 import cv2
-import numpy as np
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from camera import Camera
+from observer import IObservable
 from mediapipe.tasks import python
-import time
 from mediapipe.tasks.python import vision
 
-mp_drawing = mp.solutions.drawing_utils
-mp_hands = mp.solutions.hands
+class WakeWordModel(IObservable):
+    def __init__(self):
+        self.observers = set()
+        self.init_recognizer()
 
-def gesture_recognition(image):
-    try:
-        with open('models\gesture_recognizer.task', 'rb') as file:
-            model = file_content = file.read()
-        base_options = python.BaseOptions(model_asset_buffer=model)
-        options = vision.GestureRecognizerOptions(base_options=base_options)
-        recognizer = vision.GestureRecognizer.create_from_options(options)
-
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
-        results = recognizer.recognize(mp_image)
-
-        if results.gestures:
-            return results.gestures[0][0]
-        else:
-            return "No gesture detected"
-            
-    except Exception as e:
-        print(f"Error in gesture recognition: {e}")
-    
-with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
-    camera = Camera()
-
-    while camera.get_success:
-        camera.capture()
-        
-        image = cv2.cvtColor(camera.get_frame(), cv2.COLOR_BGR2RGB)
-        image = cv2.flip(image, 1)
-        image.flags.writeable = False
-
-        gesture = gesture_recognition(image)
-
+    def init_recognizer(self):
         try:
-            results = hands.process(image)
+            with open('models\gesture_recognizer.task', 'rb') as file:
+                model = file.read()
+            base_options = python.BaseOptions(model_asset_buffer=model)
+            options = vision.GestureRecognizerOptions(base_options=base_options)
+            self.recognizer = vision.GestureRecognizer.create_from_options(options)
         except Exception as e:
-            print(f"Error in hands.process: {e}")
-            continue
+            print(f"Error in creating gesture recognizer: {e}")
 
-        image.flags.writeable = True
-        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+    def gesture_recognition(self, image):
+        try:
+            mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
+            results = self.recognizer.recognize(mp_image)
 
-        if results.multi_hand_landmarks:
-            for num, hand in enumerate(results.multi_hand_landmarks):
-                mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS)
+            if results.gestures:
+                return results.gestures[0][0]
+            else:
+                return "No gesture detected"
+
+        except Exception as e:
+            print(f"Error in gesture recognition: {e}")
         
-        camera.show(image, gesture.category_name if gesture != "No gesture detected" else gesture)
+    def detecting_gestures(self):
+        mp_drawing = mp.solutions.drawing_utils
+        mp_hands = mp.solutions.hands
+
+        with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) as hands:
+            camera = Camera()
+
+            while camera.get_success:
+                camera.capture()
+                
+                image = cv2.cvtColor(camera.get_frame(), cv2.COLOR_BGR2RGB)
+                image = cv2.flip(image, 1)
+                image.flags.writeable = False
+
+                gesture = self.gesture_recognition(image)
+                
+                try:
+                    if gesture != "No gesture detected":
+                        if gesture.category_name == "Closed_Fist":
+                                self.notify()
+                except Exception as e:
+                    print(f"Error notifying subscribers: {e}")
+
+                try:
+                    results = hands.process(image)
+                except Exception as e:
+                    print(f"Error in hands.process: {e}")
+                    continue
+
+                image.flags.writeable = True
+                image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+                if results.multi_hand_landmarks:
+                    for i, hand in enumerate(results.multi_hand_landmarks):
+                        mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS)
+                
+                camera.show(image, gesture.category_name if gesture != "No gesture detected" else gesture)
