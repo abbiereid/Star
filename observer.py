@@ -10,15 +10,14 @@ class IObservable(ABC):
     def unsubscribe(self, observer):
         self.observers.remove(observer)
     
-    @abstractmethod
     def notify(self, *args, **kwargs):
         for observer in self.observers:
             observer.notify(self, *args, **kwargs)
 
-@abstractmethod
 class IObserver(ABC):
     def __init__(self, observable):
         observable.subscribe(self)
 
+    @abstractmethod
     def notify(self, observable, *args, **kwargs):
         pass

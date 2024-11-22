@@ -4,14 +4,14 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from camera import Camera
+from observer import IObservable
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 
-
-class WakeWordModel():
+class WakeWordModel(IObservable):
     def __init__(self):
+        self.observers = set()
         self.init_recognizer()
-        self.detecting_gestures()
 
     def init_recognizer(self):
         try:
@@ -51,6 +51,12 @@ class WakeWordModel():
                 image.flags.writeable = False
 
                 gesture = self.gesture_recognition(image)
+                try:
+                    if gesture != "No gesture detected":
+                        if gesture.category_name == "closed_fist":
+                                self.notify()
+                except Exception as e:
+                    print(f"Error notifying subscribers: {e}")
 
                 try:
                     results = hands.process(image)

@@ -10,3 +10,10 @@ class Main(IObserver):
 
     def listening():
         print("listening")
+
+try:
+    wwm = wwm.WakeWordModel()
+    main = Main(wwm)
+    wwm.detecting_gestures()
+except Exception as e:
+    print(e)
