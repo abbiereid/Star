@@ -1,12 +1,10 @@
 import mediapipe as mp
 import cv2
-import numpy as np
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from camera import Camera
 from mediapipe.tasks import python
-import time
 from mediapipe.tasks.python import vision
 
 
