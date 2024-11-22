@@ -1,5 +1,7 @@
 from models import wake_word_model as wwm
 from observer import IObservable, IObserver
+import threading
+from ui import UI
 
 class Main(IObserver):
     def __init__(self, observable):
@@ -14,5 +16,11 @@ class Main(IObserver):
 
 
 wwm = wwm.WakeWordModel()
+ui = UI()
 main = Main(wwm)
-wwm.detecting_gestures()
+
+wakeWordThread = threading.Thread(target=wwm.detecting_gestures, daemon=True)
+wakeWordThread.start()
+
+ui.run()
+
