@@ -20,4 +20,4 @@ class IObserver(ABC):
 
     @abstractmethod
     def notify(self, observable, *args, **kwargs):
-        pass
+        print("Observer notified..")

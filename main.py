@@ -6,7 +6,8 @@ class Main(IObserver):
         observable.subscribe(self)
 
     def notify(self, observable, *args, **kwargs):
-        self.listening
+        print("Observer notified..")
+        self.listening()
 
     def listening():
         print("listening")
