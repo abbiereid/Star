@@ -14,6 +14,7 @@ class IObservable(ABC):
         for observer in self.observers:
             observer.notify(self, *args, **kwargs)
 
+
 class IObserver(ABC):
     def __init__(self, observable):
         observable.subscribe(self)

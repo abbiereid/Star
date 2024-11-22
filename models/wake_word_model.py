@@ -51,9 +51,10 @@ class WakeWordModel(IObservable):
                 image.flags.writeable = False
 
                 gesture = self.gesture_recognition(image)
+                
                 try:
                     if gesture != "No gesture detected":
-                        if gesture.category_name == "closed_fist":
+                        if gesture.category_name == "Closed_Fist":
                                 self.notify()
                 except Exception as e:
                     print(f"Error notifying subscribers: {e}")

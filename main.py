@@ -9,12 +9,10 @@ class Main(IObserver):
         print("Observer notified..")
         self.listening()
 
-    def listening():
+    def listening(self):
         print("listening")
 
-try:
-    wwm = wwm.WakeWordModel()
-    main = Main(wwm)
-    wwm.detecting_gestures()
-except Exception as e:
-    print(e)
+
+wwm = wwm.WakeWordModel()
+main = Main(wwm)
+wwm.detecting_gestures()
