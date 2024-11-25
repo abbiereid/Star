@@ -16,5 +16,8 @@ class UI:
     
     def setLogo(self, path):
         self.logo = PhotoImage(file=path)
-        self.logo_label = tk.Label(self.screen, image=self.logo, bg='#c2d6d6')
-        self.logo_label.pack()
+        if hasattr(self, 'logo_label'):
+            self.logo_label.config(image=self.logo)
+        else:
+            self.logo_label = tk.Label(self.screen, image=self.logo, bg='#c2d6d6')
+            self.logo_label.pack()
