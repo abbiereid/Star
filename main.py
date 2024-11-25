@@ -6,6 +6,12 @@ from ui import UI
 class Main(IObserver):
     def __init__(self, observable):
         observable.subscribe(self)
+        self.wwm = observable #Should make this cleaner, just temp for now since it's the only thing  being observed.
+        self.wakeWordThread = threading.Thread(target=self.wwm.detecting_gestures, daemon=True)
+        self.wakeWordThread.start()
+
+        self.ui = UI()
+        self.ui.run()
 
     def notify(self, observable, *args, **kwargs):
         print("Observer notified..")
@@ -15,11 +21,5 @@ class Main(IObserver):
         print("listening")
 
 
-wwm = wwm.WakeWordModel()
-ui = UI()
-main = Main(wwm)
-
-wakeWordThread = threading.Thread(target=wwm.detecting_gestures, daemon=True)
-wakeWordThread.start()
-
-ui.run()
+wake_word = wwm.WakeWordModel()
+main = Main(wake_word)
