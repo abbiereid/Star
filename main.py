@@ -24,7 +24,7 @@ class Main(IObserver):
 
     def listening(self):
         print("listening")
-        self.ui.screen.after(0, self.ui.show_listening)
+        #self.ui.screen.after(0, self.ui.show_listening)
 
     #Stop Listening is a temp function as I have yet to implement the awareness of when a user has completed a request.
     #Needed something manual for the time being.

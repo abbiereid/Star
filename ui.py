@@ -39,4 +39,4 @@ class UI:
         frame = self.frames[i]
         i = (i + 1) % len(self.frames)
         self.listening_label.config(image=frame)
-        self.screen.after(50, self.update_listening_frames, i)
+        self.screen.after(0, self.update_listening_frames, i)
