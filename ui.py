@@ -25,6 +25,3 @@ class UI:
 
     def show_listening(self):
         pass
-
-    def update_listening_frames(self, i):
-        pass
