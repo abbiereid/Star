@@ -19,19 +19,24 @@ class UI:
         self.screen.mainloop()
 
     def show_listening(self):
-        for i in range(60):
-            self.lineX2 += 10
-            self.lineX1 += 7
-            self.move_line()
-        for i in range(60):
-            self.lineX2 -= 10
-            self.lineX1 -= 7
-            self.move_line()
+        self.listening = True
+        while self.listening:
+            for i in range(60):
+                self.lineX2 += 10
+                self.lineX1 += 7
+                self.move_line()
+            for i in range(60):
+                self.lineX2 -= 10
+                self.lineX1 -= 7
+                self.move_line()
 
     def move_line(self):
         self.canvas.coords(self.loadingLine, self.lineX1 , 450, self.lineX2, 450)
         self.screen.update()
         self.screen.after(10)
+
+    def stop_listening(self):
+        self.listening = False
 
 ui = UI()
 ui.show_listening()
