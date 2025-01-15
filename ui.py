@@ -24,19 +24,7 @@ class UI:
             self.logo_label.pack()
 
     def show_listening(self):
-        self.frames = []
-        self.gif = Image.open("assets/runningLine.gif")
-        
-        for frame in range(0, self.gif.n_frames):
-            self.gif.seek(frame)
-            self.frames.append(ImageTk.PhotoImage(self.gif.copy()))
-
-        self.listening_label = tk.Label(self.screen, bg='#c2d6d6')
-        self.listening_label.place(x=60, y=0)
-        self.update_listening_frames(0)
+        pass
 
     def update_listening_frames(self, i):
-        frame = self.frames[i]
-        i = (i + 1) % len(self.frames)
-        self.listening_label.config(image=frame)
-        self.screen.after(0, self.update_listening_frames, i)
+        pass

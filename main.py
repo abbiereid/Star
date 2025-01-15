@@ -22,9 +22,9 @@ class Main(IObserver):
         else:
             self.stopListening()
 
-    def listening(self):
+    def listening(self): #This is what will call SLR4BSL service
         print("listening")
-        #self.ui.screen.after(0, self.ui.show_listening)
+        
 
     #Stop Listening is a temp function as I have yet to implement the awareness of when a user has completed a request.
     #Needed something manual for the time being.
