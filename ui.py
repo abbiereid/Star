@@ -20,6 +20,8 @@ class UI:
 
     def show_listening(self):
         self.listening = True
+        self.lineX1 = 40
+        self.lineX2 = 40
         while self.listening:
             for i in range(60):
                 self.lineX2 += 10
@@ -37,6 +39,4 @@ class UI:
 
     def stop_listening(self):
         self.listening = False
-        self.lineX1 = 40
-        self.lineX2 = 40
         self.move_line()

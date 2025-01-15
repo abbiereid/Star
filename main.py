@@ -16,7 +16,6 @@ class Main(IObserver):
         self.ui.run()
 
     def notify(self, observable, *args, **kwargs):
-        print("Observer notified..")
         self.listeningState = kwargs.get('state', False)
         if self.listeningState:
             self.listening()
@@ -24,7 +23,7 @@ class Main(IObserver):
             self.stopListening()
 
     def listening(self): #This is what will call SLR4BSL service
-        if self.listeningAnimationThread is None or not self.listeningAnimationThread.is_alive():
+        if self.listeningAnimationThread is None:
             self.listeningAnimationThread = threading.Thread(target=self.ui.show_listening, daemon=True)
             self.listeningAnimationThread.start()
 
