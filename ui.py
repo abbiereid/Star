@@ -13,7 +13,7 @@ class UI:
 
         self.lineX1 = 40
         self.lineX2 = 40
-        self.loadingLine = self.canvas.create_line(self.lineX1, 450, self.lineX2, 450, fill="#6b9797", width=10) #X1 and X2 are the same so that it can't be seen
+        self.loadingLine = self.canvas.create_line(self.lineX1, 450, self.lineX2, 450, fill="#6b9797", width=10)
 
     def run(self):
         self.screen.mainloop()
