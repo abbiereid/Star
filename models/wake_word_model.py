@@ -12,6 +12,7 @@ class WakeWordModel(IObservable):
     def __init__(self):
         self.observers = set()
         self.init_recognizer()
+        self.paused = False
 
     def init_recognizer(self):
         try:
@@ -52,14 +53,17 @@ class WakeWordModel(IObservable):
 
                 gesture = self.gesture_recognition(image)
                 
-                try:
-                    if gesture != "No gesture detected":
-                        if gesture.category_name == "Closed_Fist":
-                            self.notify(state=True)
-                        elif gesture.category_name == "Open_Palm": #***Temporary**** stop listening gesture
-                            self.notify(state=False)
-                except Exception as e:
-                    print(f"Error notifying subscribers: {e}")
+                if not self.paused:
+                    try:
+                        if gesture != "No gesture detected":
+                            if gesture.category_name == "Closed_Fist":
+                                self.notify(state=True)
+                                self.pause()
+                            elif gesture.category_name == "Open_Palm": #***Temporary**** stop listening gesture
+                                self.notify(state=False)
+                                self.unpause()
+                    except Exception as e:
+                        print(f"Error notifying subscribers: {e}")
 
                 try:
                     results = hands.process(image)
@@ -75,3 +79,9 @@ class WakeWordModel(IObservable):
                         mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS)
                 
                 camera.show(image, gesture.category_name if gesture != "No gesture detected" else gesture)
+
+    def pause(self):
+        self.pasued = True
+    
+    def unpause(self):
+        self.pasued = False
