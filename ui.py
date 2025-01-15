@@ -37,7 +37,3 @@ class UI:
 
     def stop_listening(self):
         self.listening = False
-
-ui = UI()
-ui.show_listening()
-ui.run()
