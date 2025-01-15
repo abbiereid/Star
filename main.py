@@ -10,6 +10,7 @@ class Main(IObserver):
         self.wakeWordThread = threading.Thread(target=self.wwm.detecting_gestures, daemon=True)
         self.wakeWordThread.start()
         self.listeningState = False
+        self.listeningAnimationThread = None
 
         self.ui = UI()
         self.ui.run()
@@ -23,13 +24,17 @@ class Main(IObserver):
             self.stopListening()
 
     def listening(self): #This is what will call SLR4BSL service
-        print("listening")
-        self.ui.show_listening()
+        if self.listeningAnimationThread is None or not self.listeningAnimationThread.is_alive():
+            self.listeningAnimationThread = threading.Thread(target=self.ui.show_listening, daemon=True)
+            self.listeningAnimationThread.start()
 
     #Stop Listening is a temp function as I have yet to implement the awareness of when a user has completed a request.
     #Needed something manual for the time being.
     def stopListening(self):
-        print("Stopped listening..")
+        self.ui.stop_listening()
+        if self.listeningAnimationThread is not None:
+            self.listeningAnimationThread.join()
+            self.listeningAnimationThread = None
 
 
 wake_word = wwm.WakeWordModel()

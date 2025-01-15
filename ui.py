@@ -37,3 +37,6 @@ class UI:
 
     def stop_listening(self):
         self.listening = False
+        self.lineX1 = 40
+        self.lineX2 = 40
+        self.move_line()
