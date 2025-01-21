@@ -24,6 +24,14 @@ class Camera:
             self.release()
             cv2.destroyAllWindows()
 
+        # TEMP RECORDING FUNCTIONALITY, WILL BE CONNECTED TO MAIN AND WAKE WORD.
+
+        if cv2.waitKey(1) & 0xFF == ord('r'):
+            self.record()
+
+        if cv2.waitKey(1) & 0xFF == ord('s'):
+            self.stop_recording()
+
     def get_frame(self):
         return self.frame
         
@@ -35,3 +43,9 @@ class Camera:
     def release(self):
         self.cap.release()
         self.running = False
+
+    def record(self):
+        self.out = cv2.VideoWriter('requests/request.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 20.0, self.cap.get(cv2.CAP_PROP_FRAME_WIDTH), self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+    def stop_recording(self):
+        self.out.release()
