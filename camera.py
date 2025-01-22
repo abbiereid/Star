@@ -56,9 +56,11 @@ class Camera:
                                     20.0,
                                     (int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
         self.text = "Recording started"
+        self.show(self.frame, self.text)
             
 
     def stop_recording(self):
         self.recording = False
         self.writer.release()
         self.text = "Recording stopped"
+        self.show(self.frame, self.text)
