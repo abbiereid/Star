@@ -55,8 +55,10 @@ class Camera:
                                     cv2.VideoWriter_fourcc(*'mp4v'),
                                     20.0,
                                     (int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
+        self.text = "Recording started"
             
 
     def stop_recording(self):
         self.recording = False
         self.writer.release()
+        self.text = "Recording stopped"
