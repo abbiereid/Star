@@ -5,6 +5,8 @@ class Camera:
         self.cap = cv2.VideoCapture(0)
         self.frame = None
         self.success = False
+        self.writer = None
+        self.recording = False
 
     def capture(self):
         try:
@@ -14,6 +16,9 @@ class Camera:
                 self.release()
         except Exception as e:
             print(f"Error in camera: {e}")
+        
+        if self.recording:
+            self.writer.write(self.frame)
 
     def show(self, frame, text="No gesture detected"):
         self.frame = frame
@@ -45,7 +50,13 @@ class Camera:
         self.running = False
 
     def record(self):
-        self.out = cv2.VideoWriter('requests/request.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 20.0, self.cap.get(cv2.CAP_PROP_FRAME_WIDTH), self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        self.recording = True
+        self.writer = cv2.VideoWriter('request.mp4',
+                                    cv2.VideoWriter_fourcc(*'mp4v'),
+                                    20.0,
+                                    (int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
+            
 
     def stop_recording(self):
-        self.out.release()
+        self.recording = False
+        self.writer.release()
