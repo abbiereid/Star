@@ -5,6 +5,8 @@ class Camera:
         self.cap = cv2.VideoCapture(0)
         self.frame = None
         self.success = False
+        self.writer = None
+        self.recording = False
 
     def capture(self):
         try:
@@ -14,6 +16,9 @@ class Camera:
                 self.release()
         except Exception as e:
             print(f"Error in camera: {e}")
+        
+        if self.recording:
+            self.writer.write(self.frame)
 
     def show(self, frame, text="No gesture detected"):
         self.frame = frame
@@ -23,6 +28,14 @@ class Camera:
         if cv2.waitKey(1) & 0xFF == ord('q'):
             self.release()
             cv2.destroyAllWindows()
+
+        # TEMP RECORDING FUNCTIONALITY, WILL BE CONNECTED TO MAIN AND WAKE WORD.
+
+        if cv2.waitKey(1) & 0xFF == ord('r'):
+            self.record()
+
+        if cv2.waitKey(1) & 0xFF == ord('s'):
+            self.stop_recording()
 
     def get_frame(self):
         return self.frame
@@ -35,3 +48,19 @@ class Camera:
     def release(self):
         self.cap.release()
         self.running = False
+
+    def record(self):
+        self.recording = True
+        self.writer = cv2.VideoWriter('request.mp4',
+                                    cv2.VideoWriter_fourcc(*'mp4v'),
+                                    20.0,
+                                    (int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
+        self.text = "Recording started"
+        self.show(self.frame, self.text)
+            
+
+    def stop_recording(self):
+        self.recording = False
+        self.writer.release()
+        self.text = "Recording stopped"
+        self.show(self.frame, self.text)
