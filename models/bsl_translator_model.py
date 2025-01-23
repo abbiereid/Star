@@ -10,4 +10,8 @@ while camera.get_success:
     camera.capture()
     camera.show(camera.get_frame())
 
-subprocess.run('python -m SLR.slr.predict poseformer_v1.0_bsl.ckpt request.mp4 --batch_size 64 --embedding_kind spatial --video_file_extension mp4 ', shell=True)
+
+
+#subprocess.run('pip freeze' , shell=True)
+
+#subprocess.run('python -m SLR.slr.predict poseformer_v1.0_bsl.ckpt request.mp4 --batch_size 64 --embedding_kind spatial --video_file_extension mp4 ', shell=True)
