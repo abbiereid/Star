@@ -9,13 +9,18 @@ from observer import IObserver
 
 class SignLanguageRecogniser(IObserver):
     def __init__(self):
+        self.camera = Camera()
+
+    def notify():
         pass
 
-    def update():
-        pass
-
-    def record_request():
-        pass
+    def record_request(self):
+        while self.camera.get_success:
+            self.camera.capture()
+            self.camera.record()
+            image = cv2.cvtColor(self.camera.get_frame(), cv2.COLOR_BGR2RGB)
+            image = cv2.flip(image, 1)
+            self.camera.show(image)
 
     def send_request():
         pass
@@ -27,3 +32,6 @@ class SignLanguageRecogniser(IObserver):
 #subprocess.run('pip freeze' , shell=True)
 
 #subprocess.run('python -m SLR.slr.predict poseformer_v1.0_bsl.ckpt request.mp4 --batch_size 64 --embedding_kind spatial --video_file_extension mp4 ', shell=True)
+
+slr = SignLanguageRecogniser()
+slr.record_request()
