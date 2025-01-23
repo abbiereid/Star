@@ -9,8 +9,19 @@ from observer import IObserver
 
 class SignLanguageRecogniser(IObserver):
     def __init__(self):
-        
+        pass
 
+    def update():
+        pass
+
+    def recording_request():
+        pass
+
+    def send_request():
+        pass
+
+    def send_results():
+        pass
 
 
 #subprocess.run('pip freeze' , shell=True)
