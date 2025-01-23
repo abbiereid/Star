@@ -3,12 +3,13 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from camera import Camera
+import cv2
+from observer import IObserver
 #import predict
 
-camera = Camera()
-while camera.get_success:
-    camera.capture()
-    camera.show(camera.get_frame())
+class SignLanguageRecogniser(IObserver):
+    def __init__(self):
+        
 
 
 
