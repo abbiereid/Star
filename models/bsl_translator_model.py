@@ -14,7 +14,7 @@ class SignLanguageRecogniser(IObserver):
     def update():
         pass
 
-    def recording_request():
+    def record_request():
         pass
 
     def send_request():
