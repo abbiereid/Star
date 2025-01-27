@@ -23,7 +23,9 @@ class Camera:
     def show(self, frame, text="No gesture detected"):
         self.frame = frame
         cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
-        cv2.imshow('Camera', frame)
+
+        if self.frame is not None:
+            cv2.imshow('Camera', frame)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             self.release()
@@ -38,7 +40,8 @@ class Camera:
             self.stop_recording()
 
     def get_frame(self):
-        return self.frame
+        if self.frame is not None:
+            return self.frame
         
     def get_success(self):
         if self.cap.isOpened():
@@ -48,6 +51,9 @@ class Camera:
     def release(self):
         self.cap.release()
         self.running = False
+        if self.writer is not None:
+            self.recording = False
+            self.writer.release()
 
     def record(self):
         self.recording = True
@@ -56,11 +62,10 @@ class Camera:
                                     20.0,
                                     (int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
         self.text = "Recording started"
-        self.show(self.frame, self.text)
             
 
     def stop_recording(self):
         self.recording = False
         self.writer.release()
         self.text = "Recording stopped"
-        self.show(self.frame, self.text)
+        self.release()

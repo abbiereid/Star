@@ -15,12 +15,10 @@ class SignLanguageRecogniser(IObserver):
         pass
 
     def record_request(self):
-        while self.camera.get_success:
+        self.camera.record()
+        while self.camera.recording:
             self.camera.capture()
-            self.camera.record()
-            image = cv2.cvtColor(self.camera.get_frame(), cv2.COLOR_BGR2RGB)
-            image = cv2.flip(image, 1)
-            self.camera.show(image)
+            self.camera.show(self.camera.get_frame())
 
     def send_request():
         pass
