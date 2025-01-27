@@ -17,7 +17,7 @@ class Camera:
         except Exception as e:
             print(f"Error in camera: {e}")
         
-        if self.recording:
+        if self.recording and self.writer is not None:
             self.writer.write(self.frame)
 
     def show(self, frame, text="No gesture detected"):
@@ -62,7 +62,6 @@ class Camera:
                                     20.0,
                                     (int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
         self.text = "Recording started"
-            
 
     def stop_recording(self):
         self.recording = False
