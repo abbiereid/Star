@@ -19,11 +19,12 @@ class SignLanguageRecogniser(IObserver):
         while self.camera.recording:
             self.camera.capture()
             self.camera.show(self.camera.get_frame())
+        self.send_request()
 
-    def send_request():
+    def send_request(self):
         pass
 
-    def send_results():
+    def send_results(self):
         pass
 
 
