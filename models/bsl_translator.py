@@ -8,6 +8,10 @@ import numpy as np
 import mediapipe as mp
 import cv2
 
+
+
+
+
 # class SignLanguageRecogniser(IObserver):
 #     def __init__(self):
 #         self.camera = Camera()
@@ -32,3 +36,4 @@ import cv2
 #         pass
 
 # slr = SignLanguageRecogniser()
+
