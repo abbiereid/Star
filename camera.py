@@ -57,17 +57,24 @@ class Camera:
 
     def record(self):
         self.recording = True
-        # self.writer = cv2.VideoWriter('models/request.mp4',
-        #                             cv2.VideoWriter_fourcc(*'mp4v'),
-        #                             20.0,
-        #                             (int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
-        # self.text = "Recording started"
 
     def stop_recording(self):
         self.recording = False
-        # self.writer.release()
-        # self.text = "Recording stopped"
-        # self.release()
-
+        
     def resize(self, image, width, height):
         return cv2.resize(image, (width, height))
+    
+
+    # def record(self):
+    #     self.recording = True
+    #     self.writer = cv2.VideoWriter('models/request.mp4',
+    #                                 cv2.VideoWriter_fourcc(*'mp4v'),
+    #                                 20.0,
+    #                                 (int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
+    #     self.text = "Recording started"
+
+    # def stop_recording(self):
+    #     self.recording = False
+    #     self.writer.release()
+    #     self.text = "Recording stopped"
+    #     self.release()
