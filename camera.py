@@ -68,3 +68,6 @@ class Camera:
         self.writer.release()
         self.text = "Recording stopped"
         self.release()
+
+    def resize(self, image, width, height):
+        return cv2.resize(image, (width, height))
