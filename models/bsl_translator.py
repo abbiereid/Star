@@ -3,11 +3,14 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from camera import Camera
 from observer import IObserver
+from models.wake_word_model import WakeWordModel
 import numpy as np
 import tensorflow as tf
 
 class SignLanguageRecogniser(IObserver):
     def __init__(self):
+        WakeWordModel().subscribe(self)
+
         self.camera = Camera()
         try:
             self.model = tf.keras.models.load_model('C:/Users/abbie/Desktop/Star/models/alpha_sign4.h5')
@@ -17,8 +20,9 @@ class SignLanguageRecogniser(IObserver):
         self.translations = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
         
 
-    def notify():
-        pass
+    def notify(self):
+        self.record_request()
+        
 
     def preprocess_image(self, image):
         image = self.camera.resize(image, 64, 64)
