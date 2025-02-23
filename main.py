@@ -36,7 +36,6 @@ class Main(IObserver):
             self.listeningAnimationThread.join()
             self.listeningAnimationThread = None
 
-
 wake_word = wwm.WakeWordModel()
 bsl = bslt.SignLanguageRecogniser(wake_word)
 main = Main(wake_word)
