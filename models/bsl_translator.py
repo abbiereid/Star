@@ -14,6 +14,7 @@ class SignLanguageRecogniser(IObserver):
         except Exception as e:
             print(e)
         self.request = []
+        self.translations = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
         
 
     def notify():
@@ -23,12 +24,11 @@ class SignLanguageRecogniser(IObserver):
         image = self.camera.resize(image, 64, 64)
         image_array = np.array(image)
         image_array = np.expand_dims(image_array, axis=0)
-        
+
         self.predict(image_array)
 
     def predict(self, image):
-        prediction = self.model.predict(image)
-        self.request.append(prediction)
+        self.request.append(self.translations[np.argmax(self.model.predict(image))])
 
     def record_request(self):
         self.camera.record()
