@@ -1,4 +1,5 @@
 from models import wake_word_model as wwm
+from models import bsl_translator as bslt
 from observer import IObservable, IObserver
 import threading
 from ui import UI
@@ -22,7 +23,7 @@ class Main(IObserver):
         else:
             self.stopListening()
 
-    def listening(self): #This is what will call SLR4BSL service
+    def listening(self):
         if self.listeningAnimationThread is None:
             self.listeningAnimationThread = threading.Thread(target=self.ui.show_listening, daemon=True)
             self.listeningAnimationThread.start()
@@ -37,4 +38,5 @@ class Main(IObserver):
 
 
 wake_word = wwm.WakeWordModel()
+bsl = bslt.SignLanguageRecogniser(wake_word)
 main = Main(wake_word)

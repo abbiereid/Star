@@ -8,20 +8,25 @@ import numpy as np
 import tensorflow as tf
 
 class SignLanguageRecogniser(IObserver):
-    def __init__(self):
-        WakeWordModel().subscribe(self)
+    def __init__(self, observable):
+        observable.subscribe(self)
 
         self.camera = Camera()
         try:
             self.model = tf.keras.models.load_model('C:/Users/abbie/Desktop/Star/models/alpha_sign4.h5')
         except Exception as e:
             print(e)
+
         self.request = []
         self.translations = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
         
 
-    def notify(self):
-        self.record_request()
+    def notify(self, *args, **kwargs):
+        self.listeningState = kwargs.get('state', False)
+        if self.listeningState:
+            self.record_request()
+        else:
+            self.camera.stop_recording()
         
 
     def preprocess_image(self, image):
@@ -48,6 +53,3 @@ class SignLanguageRecogniser(IObserver):
     
     def send_results(self):
         pass
-
-slr = SignLanguageRecogniser()
-slr.record_request()
