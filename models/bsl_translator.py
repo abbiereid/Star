@@ -2,14 +2,12 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from camera import Camera
-from observer import IObserver
-from models.wake_word_model import WakeWordModel
 import numpy as np
 import tensorflow as tf
 
-class SignLanguageRecogniser(IObserver):
-    def __init__(self, observable):
-        observable.subscribe(self)
+class SignLanguageRecogniser():
+    def __init__(self):
+        self.listeningState = False
 
         self.camera = Camera()
         try:
@@ -19,14 +17,6 @@ class SignLanguageRecogniser(IObserver):
 
         self.request = []
         self.translations = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-        
-
-    def notify(self, *args, **kwargs):
-        self.listeningState = kwargs.get('state', False)
-        if self.listeningState:
-            self.record_request()
-        else:
-            self.camera.stop_recording()
         
 
     def preprocess_image(self, image):
@@ -40,12 +30,16 @@ class SignLanguageRecogniser(IObserver):
         self.request.append(self.translations[np.argmax(self.model.predict(image))])
 
     def record_request(self):
-        self.camera.record()
-        while self.camera.recording:
-            self.camera.capture()
-            self.camera.show(self.camera.get_frame())
-            self.preprocess_image(self.camera.get_frame())
-        self.send_request()
+            self.listeningState = True
+            while self.listeningState:
+                self.camera.capture()
+                self.camera.show(self.camera.get_frame(), self.request[-1] if self.request else "No Gesture Detected", "Sign Language Translator")
+                self.preprocess_image(self.camera.get_frame())
+
+    def stop_recording(self):
+        self.listeningState = False
+        if self.request:
+            self.send_request()
 
     def send_request(self):
         print(self.request)

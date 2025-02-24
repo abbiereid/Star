@@ -47,7 +47,6 @@ class WakeWordModel(IObservable):
                 camera.capture()
                 
                 image = cv2.cvtColor(camera.get_frame(), cv2.COLOR_BGR2RGB)
-                image = cv2.flip(image, 1)
                 image.flags.writeable = False
 
                 gesture = self.gesture_recognition(image)
@@ -74,4 +73,4 @@ class WakeWordModel(IObservable):
                     for i, hand in enumerate(results.multi_hand_landmarks):
                         mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS)
                 
-                camera.show(image, gesture.category_name if gesture != "No gesture detected" else gesture)
+                camera.show(image, gesture.category_name if gesture != "No gesture detected" else gesture, "Wake Word")
