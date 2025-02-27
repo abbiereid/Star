@@ -32,7 +32,7 @@ class Main(IObserver):
             self.listeningAnimationThread.start()
 
         if self.translatingThread is None:
-            self.translatingThread = threading.Thread(target=self.translator.record_request(), daemon=True)
+            self.translatingThread = threading.Thread(target=self.translator.record_request, daemon=True)
             self.translatingThread.start()
 
     #Stop Listening is a temp function as I have yet to implement the awareness of when a user has completed a request.
