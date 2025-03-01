@@ -11,13 +11,12 @@ class SignLanguageRecogniser():
 
         self.camera = Camera()
         try:
-            self.model = tf.keras.models.load_model('C:/Users/abbie/Desktop/Star/models/alpha_sign4.h5')
+            self.model = tf.keras.models.load_model('C:/Users/abbie/Desktop/Star/models/alpha_sign.h5')
         except Exception as e:
             print(e)
 
         self.request = []
-        self.translations = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-        
+        self.translations = ['A','B','C','D','E','F','G','I','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
     def preprocess_image(self, image):
         image = self.camera.resize(image, 64, 64)
