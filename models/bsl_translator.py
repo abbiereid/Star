@@ -11,7 +11,7 @@ class SignLanguageRecogniser():
 
         self.camera = Camera()
         try:
-            self.model = tf.keras.models.load_model('C:/Users/abbie/Desktop/Star/models/alpha_sign.h5')
+            self.model = tf.keras.models.load_model('C:/Users/abbie/Desktop/Star/models/alpha_sign4.h5')
         except Exception as e:
             print(e)
 
