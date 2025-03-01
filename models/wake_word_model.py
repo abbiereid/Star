@@ -46,7 +46,7 @@ class WakeWordModel(IObservable):
             while camera.get_success:
                 camera.capture()
                 
-                image = cv2.cvtColor(camera.get_frame(), cv2.COLOR_BGR2RGB)
+                image = camera.recolour(camera.get_frame())
                 image.flags.writeable = False
 
                 gesture = self.gesture_recognition(image)

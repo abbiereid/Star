@@ -55,6 +55,9 @@ class Camera:
     def resize(self, image, width, height):
         return cv2.resize(image, (width, height))
     
+    def recolour(self, image):
+        return cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
+    
 
     # def record(self):
     #     self.recording = True
