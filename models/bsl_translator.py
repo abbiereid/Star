@@ -13,12 +13,18 @@ class SignLanguageRecogniser():
 
         self.camera = Camera()
 
-        self.pipe = pipeline("image-classification", model="RavenOnur/Sign-Language")
+        #self.pipe = pipeline("image-classification", model="Heem2/sign-language-classification")
         
         # try:
         #     self.model = tf.keras.models.load_model('C:/Users/abbie/Desktop/Star/models/alpha_sign4.h5')
         # except Exception as e:
         #     print(e)
+
+        try:
+            self.model = tf.keras.models.load_from_json('C:/Users/abbie/Desktop/Star/models/model.json')
+            self.model.load_weights('C:/Users/abbie/Desktop/Star/models/model.h5')
+        except Exception as e:
+            print(e)
 
         self.request = []
         # self.translations = ['A','B','C','D','E','F','G','I','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
@@ -33,7 +39,7 @@ class SignLanguageRecogniser():
         self.predict(Image.fromarray(image))
 
     def predict(self, image):
-        self.request.append((self.pipe(image)))
+        self.request.append((self.model.predict(np.expand_dims(image, axis=0))[0]))
 
     def record_request(self):
             self.listeningState = True
