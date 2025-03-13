@@ -1,5 +1,5 @@
 from models import wake_word_model as wwm
-from models import bsl_translator as bslt
+from models import sign_language_recognition as slt
 from observer import IObservable, IObserver
 import threading
 from ui import UI
@@ -14,7 +14,7 @@ class Main(IObserver):
         self.listeningAnimationThread = None
         self.translatingThread = None
 
-        self.translator = bslt.SignLanguageRecogniser()
+        self.translator = slt.SignLanguageRecogniser()
 
         self.ui = UI()
         self.ui.run()

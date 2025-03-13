@@ -15,7 +15,7 @@ class WakeWordModel(IObservable):
 
     def init_recognizer(self):
         try:
-            with open('models\gesture_recognizer.task', 'rb') as file:
+            with open('models/gesture_recognizer.task', 'rb') as file:
                 model = file.read()
             base_options = python.BaseOptions(model_asset_buffer=model)
             options = vision.GestureRecognizerOptions(base_options=base_options)
