@@ -15,7 +15,7 @@ class WakeWordModel(IObservable):
 
     def init_recognizer(self):
         try:
-            with open('models\gesture_recognizer.task', 'rb') as file:
+            with open('models/gesture_recognizer.task', 'rb') as file:
                 model = file.read()
             base_options = python.BaseOptions(model_asset_buffer=model)
             options = vision.GestureRecognizerOptions(base_options=base_options)
@@ -46,8 +46,7 @@ class WakeWordModel(IObservable):
             while camera.get_success:
                 camera.capture()
                 
-                image = cv2.cvtColor(camera.get_frame(), cv2.COLOR_BGR2RGB)
-                image = cv2.flip(image, 1)
+                image = camera.recolour(camera.get_frame())
                 image.flags.writeable = False
 
                 gesture = self.gesture_recognition(image)
@@ -74,4 +73,4 @@ class WakeWordModel(IObservable):
                     for i, hand in enumerate(results.multi_hand_landmarks):
                         mp_drawing.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS)
                 
-                camera.show(image, gesture.category_name if gesture != "No gesture detected" else gesture)
+                camera.show(image, gesture.category_name if gesture != "No gesture detected" else gesture, "Wake Word")
