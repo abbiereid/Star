@@ -2,9 +2,9 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from camera import Camera
+from models.slr_utils.recognition import Recognition
 import numpy as np
-import tensorflow as tf
-from PIL import Image
+import cv2
 
 class SignLanguageRecogniser():
     def __init__(self):
@@ -12,20 +12,24 @@ class SignLanguageRecogniser():
 
         self.camera = Camera()
 
+        # alphabet_frames = {}
+        # for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+        #     file_path = os.path.join("alphabet", f"{letter}.json")
+        #     with open(file_path, "r") as file:
+        #         alphabet_frames[letter] = json.load(file)
+
+        self.recogniser = Recognition()
+
         self.request = []
-        self.translations = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     def preprocess_image(self, image):
-        image = self.camera.resize(image, 21, 3)
-        image = self.camera.recolour(image)
-        
-        image_array = np.array(image)
-        image_array = np.expand_dims(image_array, axis=0)
-        
-        self.predict(Image.fromarray(image))
+        image = cv2.resize(image, (256, 256))
+        self.predict(np.array(image))
 
     def predict(self, image):
-        self.request.append()
+        prediction = self.recogniser.process(image)
+
+        self.request.append(prediction)
 
     def record_request(self):
             self.listeningState = True
@@ -45,7 +49,4 @@ class SignLanguageRecogniser():
     
     def send_results(self):
         pass
-
-slr = SignLanguageRecogniser()
-slr.record_request()
 
