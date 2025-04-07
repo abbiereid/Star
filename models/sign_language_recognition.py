@@ -12,12 +12,6 @@ class SignLanguageRecogniser():
 
         self.camera = Camera()
 
-        # alphabet_frames = {}
-        # for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-        #     file_path = os.path.join("alphabet", f"{letter}.json")
-        #     with open(file_path, "r") as file:
-        #         alphabet_frames[letter] = json.load(file)
-
         self.recogniser = Recognition()
 
         self.request = []
