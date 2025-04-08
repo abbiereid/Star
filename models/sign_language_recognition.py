@@ -4,26 +4,32 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from camera import Camera
 from models.slr_utils.recognition import Recognition
 import numpy as np
-import cv2
+import time
 
 class SignLanguageRecogniser():
     def __init__(self):
         self.listeningState = False
-
         self.camera = Camera()
-
         self.recogniser = Recognition()
-
         self.request = []
+        self.lastLetter = None
+        self.timeStamp = 0
 
     def preprocess_image(self, image):
-        image = cv2.resize(image, (256, 256))
+        image = self.camera.resize(image, 256, 256)
         self.predict(np.array(image))
 
     def predict(self, image):
         prediction = self.recogniser.process(image)
 
-        self.request.append(prediction)
+        if prediction is not None:
+            if prediction is not self.lastLetter:
+                self.request.append(prediction)
+                self.timeStamp = time.time()
+            if self.timeStamp + 0.5 < time.time():
+                self.request.append(prediction)
+                self.timeStamp = time.time()
+            
 
     def record_request(self):
             self.listeningState = True
@@ -43,4 +49,3 @@ class SignLanguageRecogniser():
     
     def send_results(self):
         pass
-
