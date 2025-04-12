@@ -44,7 +44,8 @@ class SignLanguageRecogniser():
             self.send_request()
 
     def send_request(self):
-        print(self.request)
+        for letter in self.request:
+            print(letter)
         self.request = []
     
     def send_results(self):
