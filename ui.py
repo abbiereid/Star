@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.ttk import *
 from PIL import Image, ImageTk
+import datetime
 
 class UI:
     def __init__(self):
@@ -10,6 +11,8 @@ class UI:
         self.logo = ImageTk.PhotoImage(Image.open("assets/logo.png"))
         self.canvas.create_image(350, 225, image=self.logo)
         self.canvas.pack()
+
+        #add time/weather
 
         self.lineX1 = 40
         self.lineX2 = 40
