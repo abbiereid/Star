@@ -2,6 +2,7 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from camera import Camera
+from assistant import Assistant
 from models.slr_utils.recognition import Recognition
 import numpy as np
 import time
@@ -14,6 +15,8 @@ class SignLanguageRecogniser():
         self.request = []
         self.lastLetter = None
         self.timeStamp = 0
+
+        self.assistant = Assistant()
 
     def preprocess_image(self, image):
         image = self.camera.resize(image, 256, 256)
@@ -44,8 +47,15 @@ class SignLanguageRecogniser():
             self.send_request()
 
     def send_request(self):
-        print(self.request)
+        formedRequest = ""
+        for letter in self.request:
+            formedRequest = formedRequest + letter[0]
         self.request = []
+
+        if formedRequest is not "":
+            self.assistant.receive_request(formedRequest)
+        else:
+            print("Request is empty")
     
     def send_results(self):
         pass
