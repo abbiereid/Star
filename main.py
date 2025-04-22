@@ -1,8 +1,8 @@
 from models import wake_word_model as wwm
 from models import sign_language_recognition as slt
-from observer import IObservable, IObserver
+from utils.observer import IObservable, IObserver
 import threading
-from ui import UI
+from utils.ui import UI
 
 class Main(IObserver):
     def __init__(self, observable):
@@ -39,7 +39,7 @@ class Main(IObserver):
     #Needed something manual for the time being.
     def stopListening(self):
         self.ui.stop_listening()
-        self.translator.stop_recording()
+        response = self.translator.stop_recording()
 
         if self.listeningAnimationThread is not None:
             self.listeningAnimationThread.join()

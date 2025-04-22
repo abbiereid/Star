@@ -3,8 +3,8 @@ import cv2
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from camera import Camera
-from observer import IObservable
+from utils.camera import Camera
+from utils.observer import IObservable
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 

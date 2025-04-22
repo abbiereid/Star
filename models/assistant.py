@@ -5,7 +5,7 @@ class Assistant:
         self.model = "llama3.2"
 
     def recieveRequest(self, request):
-        self.processRequest(self.preprocessRequest(request))
+        return self.processRequest(self.preprocessRequest(request))
 
     def preprocessRequest(self, request):
         request= [
@@ -20,6 +20,3 @@ class Assistant:
             self.sendResponse(chat(self.model, request))
         except Exception as e:
             self.sendResponse(f"An error occurred: {e}")
-
-    def sendResponse(self, response):
-        print(response)

@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from camera import Camera
+from utils.camera import Camera
 from models.slr_utils.ASLrecognition import ASLrecognition as ASL
 from models.assistant import Assistant
 import numpy as np
@@ -36,7 +36,7 @@ class SignLanguageRecogniser():
     def stop_recording(self):
         self.listeningState = False
         if self.request:
-            self.send_request()
+            return self.send_request()
 
     def send_request(self):
         formedRequest = ""
@@ -46,9 +46,6 @@ class SignLanguageRecogniser():
 
         if formedRequest != "":
             print("Sending request: ", formedRequest)
-            self.assistant.recieveRequest(formedRequest)
+            return self.assistant.recieveRequest(formedRequest)
         else:
             print("Request is empty")
-    
-    def send_results(self):
-        pass
