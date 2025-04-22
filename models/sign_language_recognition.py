@@ -2,8 +2,8 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from camera import Camera
-from assistant import Assistant
-from models.slr_utils.recognition import Recognition
+from models.slr_utils.ASLrecognition import ASLrecognition as ASL
+from models.assistant import Assistant
 import numpy as np
 import time
 
@@ -11,11 +11,8 @@ class SignLanguageRecogniser():
     def __init__(self):
         self.listeningState = False
         self.camera = Camera()
-        self.recogniser = Recognition()
+        self.recogniser = ASL()
         self.request = []
-        self.lastLetter = None
-        self.timeStamp = 0
-
         self.assistant = Assistant()
 
     def preprocess_image(self, image):
@@ -23,18 +20,13 @@ class SignLanguageRecogniser():
         self.predict(np.array(image))
 
     def predict(self, image):
-        prediction = self.recogniser.process(image)
+        prediction = self.recogniser.processImage(image)
 
         if prediction is not None:
-            if prediction is not self.lastLetter:
-                self.request.append(prediction)
-                self.timeStamp = time.time()
-            if self.timeStamp + 0.5 < time.time():
-                self.request.append(prediction)
-                self.timeStamp = time.time()
-            
+            self.request.append(prediction)
 
     def record_request(self):
+            time.sleep(2) # sleep to allow user to move away from wake gesture
             self.listeningState = True
             while self.listeningState:
                 self.camera.capture()
@@ -52,8 +44,9 @@ class SignLanguageRecogniser():
             formedRequest = formedRequest + letter[0]
         self.request = []
 
-        if formedRequest is not "":
-            self.assistant.receive_request(formedRequest)
+        if formedRequest != "":
+            print("Sending request: ", formedRequest)
+            self.assistant.recieveRequest(formedRequest)
         else:
             print("Request is empty")
     

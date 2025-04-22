@@ -3,10 +3,11 @@ import numpy as np
 import mediapipe as mp
 from cv2.typing import MatLike
 
-LETTERS = "ABCDEFGHIKLMNOPQRSTUVWXY"
 drawing_utils = mp.solutions.drawing_utils
 drawing_styles = mp.solutions.drawing_styles
 
+# LANDMARKER CREATED BY:
+# https://github.com/kevinjosethomas
 
 class Landmarker:
 
