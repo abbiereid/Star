@@ -17,6 +17,7 @@ class Assistant:
 
     def processRequest(self, request):
         try:
-            self.sendResponse(chat(self.model, request))
+            return chat(self.model, request)
         except Exception as e:
-            self.sendResponse(f"An error occurred: {e}")
+            print(f"An error occurred: {e}")
+            return "Sorry, I couldn't process your request at the moment."
