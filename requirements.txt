@@ -5,3 +5,5 @@ tensorflow
 Pillow
 keras
 ollama
+pyttsx3
+python-weather
