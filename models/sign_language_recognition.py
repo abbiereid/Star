@@ -5,7 +5,6 @@ from utils.camera import Camera
 from models.slr_utils.ASLrecognition import ASLrecognition as ASL
 from models.assistant import Assistant
 import numpy as np
-import time
 
 class SignLanguageRecogniser():
     def __init__(self):
@@ -26,12 +25,13 @@ class SignLanguageRecogniser():
             self.request.append(prediction)
 
     def record_request(self):
-            time.sleep(2) # sleep to allow user to move away from wake gesture
             self.listeningState = True
+            self.title = "Sign Language Translator"
             while self.listeningState:
                 self.camera.capture()
-                self.camera.show(self.camera.get_frame(), str(self.request[-1]) if self.request else "No Gesture Detected", "Sign Language Translator")
+                self.camera.show(self.camera.get_frame(), str(self.request[-1]) if self.request else "No Gesture Detected", self.title)
                 self.preprocess_image(self.camera.get_frame())
+            self.camera.release_window(self.title)
 
     def stop_recording(self):
         self.listeningState = False

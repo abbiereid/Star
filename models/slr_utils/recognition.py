@@ -32,10 +32,10 @@ class IRecognition():
                         self.predictions.append(gesture)
 
                         if len(self.predictions) > 1:
-                            if len(self.predictions) < 15:
+                            if len(self.predictions) < 10:
                                 return
 
-                            if len(set(self.predictions[-15:])) == 1:
+                            if len(set(self.predictions[-10:])) == 1:
                                 gesture = self.predictions[-1]
                                 self.predictions = []
                                 return gesture, round(probability * 100 * 100) / 100
