@@ -8,12 +8,24 @@ class Assistant:
         return self.preprocessRequest(request)
 
     def preprocessRequest(self, request):
-        request= [
-            {"role": "assistant", "content": 
-                ""},
-            {"role": "user", "content": request}
+        preprocessed_request= [
+            {
+                "role": "system",
+                "content": (
+                "You are a helpful home assistant."
+                "Requests given to you may be glosses as they have been translated from ASL,"
+                "Requests may lack the letters 'J' and 'Z' as they can be difficult to translate,"
+                "So, some requests may require autocorrection"
+                "You are to respond in a helpful and friendly manner,"
+                "Please keep your responses short and to the point, no more than 2 sentences" 
+                )
+            },
+            {
+                "role": "user",
+                "content": request
+            }
         ]
-        return self.processRequest(request)
+        return self.processRequest(preprocessed_request)
     
 
     def processRequest(self, request):
