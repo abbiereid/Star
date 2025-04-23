@@ -22,6 +22,10 @@ class Main(IObserver):
         self.speech = TextToSpeech()
 
         self.ui = UI()
+
+        self.datetimeThread = threading.Thread(target=self.update_date_time, daemon=True)
+        self.datetimeThread.start()
+
         self.ui.run()
 
     def notify(self, observable, *args, **kwargs):
@@ -69,6 +73,12 @@ class Main(IObserver):
 
         self.responseSpeechThread = threading.Thread(target=self.speech.speak, args=(self.response,), daemon=True)
         self.responseSpeechThread.start()
+
+    def update_date_time(self):
+        try:
+            self.ui.update_date_time()
+        except Exception as e:
+            print(f"Error updating date/time: {e}")
 
 wake_word = wwm.WakeWordModel()
 main = Main(wake_word)
