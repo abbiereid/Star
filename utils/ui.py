@@ -58,7 +58,7 @@ class UI:
 
     def show_response(self, response):
         self.responseBox = self.canvas.create_rectangle(0, 0, 700, 500, fill="#c2d6d6", outline="#c2d6d6")
-        self.response = self.canvas.create_text(350, 250, text=response, font=("Arial", 40), fill="#6b9797", width=600, anchor="center")
+        self.response = self.canvas.create_text(350, 250, text=response, font=("Arial", 35), fill="#6b9797", width=600, anchor="center")
         self.canvas.tag_raise(self.response)
         self.screen.update()
         self.screen.after(10000, self.clear_response)
