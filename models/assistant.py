@@ -3,6 +3,7 @@ from ollama import chat
 class Assistant:
     def __init__(self):
         self.model = "llama3.2"
+        self.history = []
 
     def recieveRequest(self, request):
         return self.preprocessRequest(request)
@@ -21,6 +22,13 @@ class Assistant:
                 )
             },
             {
+                "role": "assistant",
+                "content": (
+                    "Here is the chat history so far:"
+                    "\n".join(self.history)
+                )
+            },
+            {
                 "role": "user",
                 "content": request
             }
@@ -34,6 +42,8 @@ class Assistant:
             if self.response.message.content == "":
                 return "Sorry, I couldn't understand your request."
             else:
+                self.history.append(f"User request: {request}")
+                self.history.append(f"Your response: {self.response.message.content}")
                 return self.response.message.content
         except Exception as e:
             print(f"An error occurred: {e}")
