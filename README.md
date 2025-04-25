@@ -1,9 +1,8 @@
 <div align="center">
 
 # Star
-This is my final year submission for University.
-Star is a home assistant for non-verbal people, focusing on the deaf community and anybody who uses BSL as their main source of communication.
-
-## In development
-<img src="https://github.com/user-attachments/assets/1a60a257-e5cb-4833-aeb1-67f283d19e5f" alt="Star Logo (1)" width="550" height="550">
+This is my final year project submission for university.
+Star is a home assistant for non-verbal people, focusing on the deaf community and anybody who uses sign language as their main source of communication.
+<img src="https://github.com/user-attachments/assets/ff3bfe6d-4f81-4569-809e-ace4b5793eca" alt="Star Logo" width="550" height="550">
+Star has been designed in a way that means any sign language model can be inserted and utilised.
 </div>
