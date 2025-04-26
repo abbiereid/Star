@@ -12,7 +12,8 @@ This project utilises MediaPipe technology, Ollama, and Llama3.2.
 Below is a sequence diagram, showing the basic flow of Star's system.
 
 
-<img src="https://github.com/user-attachments/assets/5b1113aa-4ee9-447a-9a8a-8c940e8bb9cf" alt="Sequence diagram showing the flow of Star">
+<img src="https://github.com/user-attachments/assets/6f72262a-bd90-41f0-bf34-37bb03de0a90" alt="Sequence diagram showing the flow of Star">
+
 
 
 Future improvements will see Star integrated with <a href="https://home-assistant.io">Home Assistant</a>, for further home automation.
