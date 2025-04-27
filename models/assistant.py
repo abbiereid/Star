@@ -1,4 +1,8 @@
 from ollama import chat
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.weather import Weather
 
 class Assistant:
     def __init__(self):
@@ -6,6 +10,12 @@ class Assistant:
         self.history = []
 
     def recieveRequest(self, request):
+        if "ALLOWLOCATION" in request:
+            Weather.permission = True
+            return "Location access has been granted. This can be removed at any time by saying 'DENY LOCATION'."
+        elif "DENYLOCATION" in request:
+            Weather.permission = False
+            return "Location access has been denied. This can be granted again at any time by saying 'ALLOW LOCATION'."
         return self.preprocessRequest(request)
 
     def preprocessRequest(self, request):
@@ -19,6 +29,7 @@ class Assistant:
                 "So, some requests may require autocorrection"
                 "You are to respond in a helpful and friendly manner,"
                 "Please keep your responses short and to the point, no more than 2 sentences" 
+                "If you are asked about location, please inform the user that they can say 'ALLOW LOCATION' to grant access, or 'DENY LOCATION' to deny access."
                 )
             },
             {

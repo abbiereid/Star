@@ -23,7 +23,7 @@ class SignLanguageRecogniser():
         prediction = self.recogniser.processImage(image)
 
         if prediction is not None:
-            self.request.append(prediction) #shows it with probability
+            self.request.append(prediction)
             self.formedRequest = self.formedRequest + prediction[0]
 
     def record_request(self):

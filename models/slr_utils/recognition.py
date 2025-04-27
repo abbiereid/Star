@@ -31,14 +31,15 @@ class IRecognition():
                     if probability > self.min_confidence:
                         self.predictions.append(gesture)
 
-                        if len(self.predictions) > 1:
-                            if len(self.predictions) < 10:
+                        x = 10
+
+                        if len(self.predictions) < x:
                                 return
 
-                            if len(set(self.predictions[-10:])) == 1:
-                                gesture = self.predictions[-1]
-                                self.predictions = []
-                                return gesture, round(probability * 100 * 100) / 100
+                        if len(set(self.predictions[-x:])) == 1:
+                            gesture = self.predictions[-1]
+                            self.predictions = []
+                            return gesture, round(probability * 100 * 100) / 100
                     
                 except Exception as e:
                         print(f"Error: {e}")

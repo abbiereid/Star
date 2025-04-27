@@ -4,6 +4,7 @@ from utils.observer import IObservable, IObserver
 import threading
 from utils.ui import UI
 from utils.textTospeech import TextToSpeech
+import asyncio
 
 class Main(IObserver):
     def __init__(self, observable):
@@ -25,6 +26,9 @@ class Main(IObserver):
 
         self.datetimeThread = threading.Thread(target=self.update_date_time, daemon=True)
         self.datetimeThread.start()
+
+        self.weatherThread = threading.Thread(target=self.update_weather, daemon=True)
+        self.weatherThread.start()
 
         self.ui.run()
 
@@ -79,6 +83,12 @@ class Main(IObserver):
             self.ui.update_date_time()
         except Exception as e:
             print(f"Error updating date/time: {e}")
+
+    def update_weather(self):
+        try:
+            asyncio.run(self.ui.update_weather())
+        except Exception as e:
+            print(f"Error updating weather: {e}")
 
 wake_word = wwm.WakeWordModel()
 main = Main(wake_word)
