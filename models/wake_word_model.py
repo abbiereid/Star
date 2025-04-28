@@ -12,6 +12,7 @@ class WakeWordModel(IObservable):
     def __init__(self):
         self.observers = set()
         self.previous_gesture = None
+        self.frame_count = 0
         self.init_recognizer()
 
     def init_recognizer(self):
@@ -63,6 +64,11 @@ class WakeWordModel(IObservable):
 
                 if gesture != "No gesture detected" and gesture.category_name != 'None':
                         self.previous_gesture = gesture
+
+                self.frame_count += 1
+                if self.frame_count > 10:
+                    self.previous_gesture = None
+                    self.frame_count = 0
 
                 try:
                     results = hands.process(image)
