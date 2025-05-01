@@ -32,11 +32,14 @@ class Camera:
     def get_success(self):
         return self.success
     
-    def show(self, frame, text="No gesture detected", title="Camera"):
+    def show(self, frame, text="No gesture detected", title="Camera", extra_text=None):
         self.frame = frame
 
         if text is not None:
             cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+
+        if extra_text is not None:
+            cv2.putText(frame, extra_text, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
 
         if self.frame is not None:
             cv2.imshow(title, frame)

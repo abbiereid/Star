@@ -9,6 +9,8 @@ drawing_styles = mp.solutions.drawing_styles
 # LANDMARKER CREATED BY:
 # https://github.com/kevinjosethomas
 
+# This has been utilised as the model expects this format.
+
 class Landmarker:
 
     def __init__(

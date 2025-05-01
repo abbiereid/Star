@@ -9,7 +9,7 @@ from slr_utils.recognition import IRecognition
 
 class ASLrecognition(IRecognition):
     def __init__(self, min_confidence: float = 0.8):
-        self.model_path = "C:/Users/abbie/Desktop/dissertation/Star/models/model6.keras"
+        self.model_path = "models/model6.keras"
         self.gestures = ["A", "B", "C", "D", "E", "F", "G", "H", "I",
                         "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
                         "U", "V", "W", "X", "Y"]

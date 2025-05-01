@@ -7,3 +7,5 @@ keras
 ollama
 pyttsx3
 python-weather
+geocoder
+asyncio

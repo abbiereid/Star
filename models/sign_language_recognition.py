@@ -13,6 +13,7 @@ class SignLanguageRecogniser():
         self.recogniser = ASL()
         self.request = []
         self.assistant = Assistant()
+        self.formedRequest = ""
 
     def preprocess_image(self, image):
         image = self.camera.resize(image, 256, 256)
@@ -23,13 +24,16 @@ class SignLanguageRecogniser():
 
         if prediction is not None:
             self.request.append(prediction)
+            self.formedRequest = self.formedRequest + prediction[0]
 
     def record_request(self):
+            self.formedRequest = ""
+            self.request = []
             self.listeningState = True
             self.title = "Sign Language Translator"
             while self.listeningState:
                 self.camera.capture()
-                self.camera.show(self.camera.get_frame(), str(self.request[-1]) if self.request else "No Gesture Detected", self.title)
+                self.camera.show(self.camera.get_frame(), str(self.request[-1]) if self.request else "No Gesture Detected", self.title, self.formedRequest)
                 self.preprocess_image(self.camera.get_frame())
             self.camera.release_window(self.title)
 
@@ -39,13 +43,8 @@ class SignLanguageRecogniser():
             return self.send_request()
 
     def send_request(self):
-        formedRequest = ""
-        for letter in self.request:
-            formedRequest = formedRequest + letter[0]
-        self.request = []
-
-        if formedRequest != "":
-            print("Sending request: ", formedRequest)
-            return self.assistant.recieveRequest(formedRequest)
+        if self.formedRequest != "":
+            print("Sending request: ", self.formedRequest)
+            return self.assistant.receiveRequest(self.formedRequest)
         else:
             print("Request is empty")

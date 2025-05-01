@@ -11,6 +11,8 @@ from mediapipe.tasks.python import vision
 class WakeWordModel(IObservable):
     def __init__(self):
         self.observers = set()
+        self.previous_gesture = None
+        self.frame_count = 0
         self.init_recognizer()
 
     def init_recognizer(self):
@@ -52,13 +54,21 @@ class WakeWordModel(IObservable):
                 gesture = self.gesture_recognition(image)
                 
                 try:
-                    if gesture != "No gesture detected":
-                        if gesture.category_name == "Closed_Fist":
-                            self.notify(state=True)
-                        elif gesture.category_name == "Thumb_Up": #***Temporary**** stop listening gesture
+                    if gesture != "No gesture detected" and self.previous_gesture != None:
+                        if self.previous_gesture.category_name == "Closed_Fist" and gesture.category_name == "Open_Palm":
+                                self.notify(state=True)
+                        elif gesture.category_name == "Thumb_Up":
                             self.notify(state=False)
                 except Exception as e:
                     print(f"Error notifying subscribers: {e}")
+
+                if gesture != "No gesture detected" and gesture.category_name != 'None':
+                        self.previous_gesture = gesture
+
+                self.frame_count += 1
+                if self.frame_count > 10:
+                    self.previous_gesture = None
+                    self.frame_count = 0
 
                 try:
                     results = hands.process(image)
