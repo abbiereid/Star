@@ -57,7 +57,7 @@ class WakeWordModel(IObservable):
                     if gesture != "No gesture detected" and self.previous_gesture != None:
                         if self.previous_gesture.category_name == "Closed_Fist" and gesture.category_name == "Open_Palm":
                                 self.notify(state=True)
-                        elif gesture.category_name == "Thumb_Up": #***Temporary**** stop listening gesture
+                        elif gesture.category_name == "Thumb_Up":
                             self.notify(state=False)
                 except Exception as e:
                     print(f"Error notifying subscribers: {e}")

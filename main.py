@@ -33,12 +33,18 @@ class Main(IObserver):
         self.ui.run()
 
     def notify(self, observable, *args, **kwargs):
-        self.listeningState = kwargs.get('state', False)
-        if self.listeningState:
-            self.listening()
-        else:
-            if self.listeningAnimationThread is not None and self.translatingThread is not None:
-                self.stopListening()
+        if observable == self.wwm:
+            self.listeningState = kwargs.get('state', False)
+            if self.listeningState:
+                self.listening()
+            else:
+                if self.listeningAnimationThread is not None and self.translatingThread is not None:
+                    self.stopListening()
+        elif observable == self.scheduler:
+            if 'message' in kwargs:
+                self.ui.display_message(f"Reminder: {kwargs['message']}")
+            elif 'timer' in kwargs:
+                self.ui.display_message(f"Timer finished: {kwargs['timer']} seconds")
 
     def listening(self):
         if self.responseAnimationThread is not None:
@@ -57,8 +63,6 @@ class Main(IObserver):
             self.translatingThread = threading.Thread(target=self.translator.record_request, daemon=True)
             self.translatingThread.start()
 
-    #Stop Listening is a temp function as I have yet to implement the awareness of when a user has completed a request.
-    #Needed something manual for the time being.
     def stopListening(self):
         self.ui.stop_listening()
         self.response = self.translator.stop_recording()
@@ -72,7 +76,7 @@ class Main(IObserver):
         self.showResponse()
 
     def showResponse(self):
-        self.responseAnimationThread = threading.Thread(target=self.ui.show_response, args=(self.response,), daemon=True)
+        self.responseAnimationThread = threading.Thread(target=self.ui.display_message, args=(self.response,), daemon=True)
         self.responseAnimationThread.start()
 
         self.responseSpeechThread = threading.Thread(target=self.speech.speak, args=(self.response,), daemon=True)

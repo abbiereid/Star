@@ -77,13 +77,13 @@ class UI:
         self.listening = False
         self.move_line()
 
-    def show_response(self, response):
-        self.responseBox = self.canvas.create_rectangle(0, 0, 800, 550, fill="#c2d6d6", outline="#c2d6d6")
-        self.response = self.canvas.create_text(350, 250, text=response, font=("Arial", 35), fill="#6b9797", width=600, anchor="center")
-        self.canvas.tag_raise(self.response)
+    def display_message(self, message):
+        self.messageBox = self.canvas.create_rectangle(0, 0, 800, 550, fill="#c2d6d6", outline="#c2d6d6")
+        self.message = self.canvas.create_text(350, 250, text=message, font=("Arial", 35), fill="#6b9797", width=600, anchor="center")
+        self.canvas.tag_raise(self.message)
         self.screen.update()
-        self.screen.after(8000, self.clear_response)
+        self.screen.after(8000, self.clear_message)
 
-    def clear_response(self):
-        self.canvas.delete(self.responseBox)
-        self.canvas.delete(self.response)
+    def clear_message(self):
+        self.canvas.delete(self.messageBox)
+        self.canvas.delete(self.message)

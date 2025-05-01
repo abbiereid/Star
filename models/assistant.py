@@ -9,7 +9,7 @@ class Assistant:
         self.model = "llama3.2"
         self.history = []
 
-    def recieveRequest(self, request):
+    def receiveRequest(self, request):
         if "ALLOWLOCATION" in request:
             Weather.permission = True
             return "Location access has been granted. This can be removed at any time by saying 'DENY LOCATION'."
@@ -26,10 +26,13 @@ class Assistant:
                 "You are a helpful home assistant."
                 "Requests given to you may be glosses as they have been translated from ASL,"
                 "Requests may lack the letters 'J' and 'Z' as they can be difficult to translate,"
-                "So, some requests may require autocorrection"
+                "Some requests may require autocorrection."
                 "You are to respond in a helpful and friendly manner,"
-                "Please keep your responses short and to the point, no more than 2 sentences" 
+                "Remember that you are a home assistant and not a human,"
+                "You can only respond to requests that are within your capabilities."
+                "Keep your responses short and to the point, no more than 2 sentences." 
                 "If you are asked about location, please inform the user that they can say 'ALLOW LOCATION' to grant access, or 'DENY LOCATION' to deny access."
+                "If you think that a request is attempting to access location but there are any spelling errors, inform the user that they can say 'ALLOW LOCATION' to grant access, or 'DENY LOCATION' to deny access."
                 )
             },
             {

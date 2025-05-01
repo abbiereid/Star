@@ -45,6 +45,6 @@ class SignLanguageRecogniser():
     def send_request(self):
         if self.formedRequest != "":
             print("Sending request: ", self.formedRequest)
-            return self.assistant.recieveRequest(self.formedRequest)
+            return self.assistant.receiveRequest(self.formedRequest)
         else:
             print("Request is empty")
